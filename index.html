@@ -1,13 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bình đẹp trai</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thực hành 1</title>
+<style>
+    /* CSS để thiết kế giao diện */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    /* Hiển thị các nhóm câu hỏi */
+    .question-group {
+        margin-bottom: 20px;
+    }
+    .question {
+        margin-bottom: 10px;
+    }
+</style>
 </head>
 <body>
-	<h1>Hà Hoà Bình MSV B21DCCN173</h1>
 
+<div class="container">
+    <h2>Bài kiểm tra</h2>
+    <form id="userInfoForm">
+        <label for="fullName">Họ và tên:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="dob">Ngày tháng năm sinh:</label>
+        <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" required>
+
+        <label for="studentId">Mã sinh viên:</label>
+        <input type="text" id="studentId" name="studentId" required>
+
+        <label for="class">Lớp:</label>
+        <input type="text" id="class" name="class" required>
+
+        <input type="submit" value="Bắt đầu">
+    </form>
+
+    <!-- Hiển thị các nhóm câu hỏi -->
+    <div id="questionGroups">
+        <!-- Dữ liệu câu hỏi sẽ được thêm vào đây bằng JavaScript -->
+    </div>
+</div>
+
+<script>
+// Mảng các câu hỏi (được giả định)
+var questions = [
+    // Nhóm 1: Lựa chọn đúng/sai
+    ["Câu hỏi 1", "Câu hỏi 2", "Câu hỏi 3", "Câu hỏi 4", "Câu hỏi 5", "Câu hỏi 6", "Câu hỏi 7", "Câu hỏi 8", "Câu hỏi 9", "Câu hỏi 10"],
+    // Nhóm 2: Chọn 1 trong 4 câu trả lời
+    ["Câu hỏi 11", "Câu hỏi 12", "Câu hỏi 13", "Câu hỏi 14", "Câu hỏi 15", "Câu hỏi 16", "Câu hỏi 17", "Câu hỏi 18", "Câu hỏi 19", "Câu hỏi 20"],
+    // Nhóm 3: Chọn nhiều câu trả lời
+    ["Câu hỏi 21", "Câu hỏi 22", "Câu hỏi 23", "Câu hỏi 24", "Câu hỏi 25", "Câu hỏi 26", "Câu hỏi 27", "Câu hỏi 28", "Câu hỏi 29", "Câu hỏi 30"],
+    // Nhóm 4: Trả lời tự luận
+    ["Câu hỏi 31", "Câu hỏi 32", "Câu hỏi 33", "Câu hỏi 34", "Câu hỏi 35", "Câu hỏi 36", "Câu hỏi 37", "Câu hỏi 38", "Câu hỏi 39", "Câu hỏi 40"]
+];
+
+// Lấy form thông tin người dùng
+var userInfoForm = document.getElementById("userInfoForm");
+
+// Bắt sự kiện submit form
+userInfoForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Ngăn chặn gửi form mặc định
+
+    // Lấy thông tin từ form
+    var fullName = document.getElementById("fullName").value;
+    var dob = document.getElementById("dob").value;
+    var studentId = document.getElementById("studentId").value;
+    var classInfo = document.getElementById("class").value;
+
+    // Ẩn form nhập thông tin
+    userInfoForm.style.display = "none";
+
+    // Hiển thị câu hỏi cho từng nhóm
+    displayQuestionGroups();
+});
+
+// Hàm hiển thị câu hỏi cho từng nhóm
+function displayQuestionGroups() {
+    var questionGroups = document.getElementById("questionGroups");
+
+    for (var i = 0; i < questions.length; i++) {
+        var questionGroupDiv = document.createElement("div");
+        questionGroupDiv.classList.add("question-group");
+        
+        // Tiêu đề nhóm câu hỏi
+        var groupTitle = document.createElement("h3");
+        groupTitle.textContent = "Nhóm " + (i + 1);
+        questionGroupDiv.appendChild(groupTitle);
+
+        // Hiển thị câu hỏi trong nhóm
+        questions[i].forEach(function(question, index) {
+            var questionDiv = document.createElement("div");
+            questionDiv.classList.add("question");
+            questionDiv.innerHTML = "<p>" + question + "</p>";
+
+            // Kiểm tra loại câu hỏi và thêm các dạng trả lời tương ứng
+            switch (i) {
+                case 0: // Nhóm 1: Lựa chọn đúng/sai
+                    questionDiv.innerHTML += "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='true'> Đúng</label>" +
+                                              "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='false'> Sai</label>";
+                    break;
+                case 1: // Nhóm 2: Chọn 1 trong 4 câu trả lời
+                    questionDiv.innerHTML += "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='1'> A</label>" +
+                                              "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='2'> B</label>" +
+                                              "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='3'> C</label>" +
+                                              "<label><input type='radio' name='group" + (i + 1) + "question" + (index + 1) + "' value='4'> D</label>";
+                    break;
+                case 2: // Nhóm 3: Chọn nhiều câu trả lời
+                    questionDiv.innerHTML += "<label><input type='checkbox' name='group" + (i + 1) + "question" + (index + 1) + "' value='1'> A</label>" +
+                                              "<label><input type='checkbox' name='group" + (i + 1) + "question" + (index + 1) + "' value='2'> B</label>" +
+                                              "<label><input type='checkbox' name='group" + (i + 1) + "question" + (index + 1) + "' value='3'> C</label>" +
+                                              "<label><input type='checkbox' name='group" + (i + 1) + "question" + (index + 1) + "' value='4'> D</label>";
+                    break;
+                case 3: // Nhóm 4: Trả lời tự luận
+                    questionDiv.innerHTML += "<textarea name='group" + (i + 1) + "question" + (index + 1) + "' rows='4' cols='50'></textarea>";
+                    break;
+                default:
+                    break;
+            }
+
+            questionGroupDiv.appendChild(questionDiv);
+        });
+
+        questionGroups.appendChild(questionGroupDiv);
+    }
+}
+</script>
 
 </body>
 </html>
